@@ -23,6 +23,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - uses: olegtarasov/get-tag@v2.1.3
+      id: tagName
+      with:
+      # tagRegex: "foobar-(.*)"
+      # Optional: Returns specified group text as the tag name. Full tag string is returned if regex is not defined.
+       tagRegexGroup: 1 # Optional. Default is 1.
 
     - name: run tag
-      run: echo ${{GIT_TAG_NAME}} 
+      run: echo "${{ steps.tagName.outputs.tag }}"

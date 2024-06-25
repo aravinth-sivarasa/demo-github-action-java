@@ -22,6 +22,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - uses: actions/download-artifact@v4
+      with:
+        name: demo-2.0.0-SNAPSHOT.jar
 
     - name: Log in to the Container registry
       uses: docker/login-action@v3
@@ -37,4 +40,6 @@ jobs:
         tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{env.IMAGE_NAME}}:v0.0.1
         file: Dockerfile
         context: .
-        no-cache: true        
+        no-cache: true
+        build-args: |
+          bundle_path=demo-2.0.0-SNAPSHOT.jar

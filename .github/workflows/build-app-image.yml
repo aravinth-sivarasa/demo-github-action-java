@@ -15,7 +15,7 @@ jobs:
       contents: read
       packages: write
     steps:
-    - uses: ${{ github.repository }}/.github/workflows/build-app-maven.yml
+    - uses: .github/workflows/build-app-maven.yml
 
 
     - name: Log in to the Container registry

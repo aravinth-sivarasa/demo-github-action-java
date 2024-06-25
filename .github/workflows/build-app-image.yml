@@ -10,7 +10,7 @@ env:
 
 jobs:
   call-app-build:
-    uses: aravinth-sivarsa/demo-github-action/.github/workflows/build-app-maven.yml@main
+    uses: aravinth-sivarsa/demo-github-action/.github/workflows/build-app-maven.yml
 
   build-app-image:
     runs-on: ubuntu-latest

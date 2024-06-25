@@ -1,0 +1,35 @@
+name: Build Gradle bundle, container image and push to Git registry
+
+on:
+  workflow_dispatch: 
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: demo-app
+  JDK_VERSION: 17
+
+jobs:
+  build-app-image:
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: read
+      packages: write
+    steps:
+    - uses: ${{ github.repository }}/.github/workflows/build-app-maven.yml
+
+
+    - name: Log in to the Container registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Push the image to Github registry
+      uses: docker/build-push-action@v5
+      with:
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{env.IMAGE_NAME}}:v0.0.1
+        file: Dockerfile
+        context: .
+        no-cache: true        

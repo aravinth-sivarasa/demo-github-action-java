@@ -10,15 +10,18 @@ env:
 
 jobs:
 
+  call-app-build:
+    name: Call build-app-maven.yml
+    uses: ./.github/workflows/build-app-maven.yml
   build-app-image:
+    needs: call-app-build
     runs-on: ubuntu-latest
     permissions: 
       contents: read
       packages: write
     steps:
     - uses: actions/checkout@v4
-    - name: Call build-app-maven.yml
-      uses: ./.github/workflows/build-app-maven.yml
+
 
     - name: Log in to the Container registry
       uses: docker/login-action@v3

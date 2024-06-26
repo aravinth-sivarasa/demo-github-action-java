@@ -36,17 +36,13 @@ jobs:
         run: echo "APP_TAG=${{ env.APP_TAG }}" >> $env:GITHUB_ENV
         if: ${{ env.APP_TAG != 'v0.0.0' }}
       - name: Print the current tag
-        run: echo "Job env ${{ github.job.env.APP_TAG }} glob env ${{ github.env }} ${{ github.job.env.APP_TAG }}"
+        run: echo "global env ${{ github.env.APP_TAG }} job env ${{ github.job.env.APP_TAG }}"
 
   call-app-build:
     needs: fetch-tag
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/workflows/build-app-maven.yml
-        with:
-          APP_TAG: ${{ env.APP_TAG }}
+    uses: ./.github/workflows/build-app-maven.yml
+    with:
+      APP_TAG: ${{ github.event.inputs.APP_TAG }}
 
   build-app-image:
     needs: call-app-build

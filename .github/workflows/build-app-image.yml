@@ -17,6 +17,7 @@ env:
   IMAGE_NAME: demo-app
   JDK_VERSION: 17
   APP_TAG: ${{ github.event.inputs.APP_TAG }}
+  APP_TAG_V1: v0.0.11
 
 jobs:
   fetch-tag:
@@ -32,9 +33,6 @@ jobs:
         run: echo "APP_TAG=${{ steps.tagName.outputs.tag }}" >> $env:GITHUB_ENV
         if: ${{ env.APP_TAG == '' }}
 
-      - name: Assign tag to global variable
-        run: echo "APP_TAG=${{ env.APP_TAG }}" >> $env:GITHUB_ENV
-        if: ${{ env.APP_TAG != 'v0.0.0' }}
       - name: Print the current tag
         run: echo "global env ${{ github.env.APP_TAG }} job env ${{ github.job.env.APP_TAG }}"
 
@@ -42,7 +40,7 @@ jobs:
     needs: fetch-tag
     uses: ./.github/workflows/build-app-maven.yml
     with:
-      APP_TAG: ${{ github.env.APP_TAG }}
+      APP_TAG: ${{ github.env.APP_TAG_V1 }}
 
   build-app-image:
     needs: call-app-build

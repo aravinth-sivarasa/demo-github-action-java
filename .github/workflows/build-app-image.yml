@@ -36,6 +36,12 @@ jobs:
       - name: Print the current tag
         run: echo "global env ${{ github.env.APP_TAG }} job env ${{ github.job.env.APP_TAG }}"
 
+  test-variable:
+    runs-on: ubuntu-latest
+    needs: fetch-tag
+    steps:
+      - uses: actions/checkout@v4 
+      - run: echo "check the variable ${{ env.APP_TAG }}"     
   call-app-build:
     needs: fetch-tag
     uses: ./.github/workflows/build-app-maven.yml

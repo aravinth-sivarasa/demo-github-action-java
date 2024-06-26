@@ -1,4 +1,4 @@
-name: Build Gradle bundle, container image and push to Git registry
+name: Build Java and Docker
 
 on:
   workflow_dispatch:
@@ -15,9 +15,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: demo-app
-  JDK_VERSION: 17
   APP_TAG: ${{ github.event.inputs.APP_TAG }}
-  APP_TAG_V1: v0.0.11
 
 jobs:
   fetch-tag:
@@ -31,13 +29,17 @@ jobs:
         id: tagName
         with:
           tagRegexGroup: 1 # Optional. Default is 1.
-      - name: Fetch tag
-        id: build_var
-        run: echo "APP_TAG=${{ steps.tagName.outputs.tag }}" >> $env:GITHUB_OUTPUT
+
+      - name: Git repo tag
+        run: echo "APP_TAG=${{ steps.tagName.outputs.tag }}" >> $GITHUB_ENV
         if: ${{ env.APP_TAG == '' }}
+      - name: User input tag
+        run: echo "APP_TAG=${{ env.APP_TAG }}" >> $GITHUB_ENV
+        if: ${{ env.APP_TAG != '' }}
 
       - name: Fetch final value
-        run: echo "APP_TAG=$APP_TAG" >> $env:GITHUB_OUTPUT
+        run: echo "APP_TAG=$APP_TAG" >> $GITHUB_OUTPUT
+        id: build_var
 
       
 

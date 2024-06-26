@@ -33,7 +33,7 @@ jobs:
     
 
     - name: check env variables
-      run: echo "${{env}} and ${{inputs.APP_TAG}}"
+      run: echo "git hub ${{github.env.APP_TAG}} and ${{inputs.APP_TAG}}"
     - name: Build with Maven
       run: mvn clean install -Drevision='${{inputs.APP_TAG}}'
 

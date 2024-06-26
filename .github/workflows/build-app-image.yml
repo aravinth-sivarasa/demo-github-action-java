@@ -24,13 +24,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: olegtarasov/get-tag@v2.1.3
-        if: ${{ env.APP_TAG == 'v0.0.0' }}
+        if: ${{ env.APP_TAG == '' }}
         id: tagName
         with:
           tagRegexGroup: 1 # Optional. Default is 1.
       - name: Fetch tag
         run: echo "APP_TAG=${{ steps.tagName.outputs.tag }}" >> $env:GITHUB_ENV
-        if: ${{ env.APP_TAG == 'v0.0.0' }}
+        if: ${{ env.APP_TAG == '' }}
 
       - name: Assign tag to global variable
         run: echo "APP_TAG=${{ env.APP_TAG }}" >> $env:GITHUB_ENV

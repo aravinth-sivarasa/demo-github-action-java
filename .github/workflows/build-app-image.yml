@@ -2,7 +2,9 @@ name: Build Gradle bundle, container image and push to Git registry
 
 on:
   workflow_dispatch: 
-
+  push:
+    tags:
+    - 'v[0-9]+.[0-9]+.[0-9]+'
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: demo-app
@@ -20,12 +22,13 @@ jobs:
         tagRegexGroup: 1 # Optional. Default is 1.
     - name: Fetch tag
       run: echo "APP_TAG=${{ steps.tagName.outputs.tag }}" >> $env:GITHUB_ENV
+    - name: Print the current tag
+      run: echo -${{env.APP_TAG}}
 
   call-app-build:
     needs: fetch-tag
-    name: Call build-app-maven.yml
     uses: ./.github/workflows/build-app-maven.yml
-    
+
   build-app-image:
     needs: call-app-build
     runs-on: ubuntu-latest

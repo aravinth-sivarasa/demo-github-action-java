@@ -37,7 +37,7 @@ jobs:
         if: ${{ env.APP_TAG == '' }}
 
       - name: Fetch final value
-        run: echo "APP_TAG=${{ env.APP_TAG }}" >> $env:GITHUB_ENV
+        run: echo "APP_TAG=$APP_TAG" >> $env:GITHUB_ENV
 
       
 

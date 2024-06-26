@@ -31,7 +31,7 @@ jobs:
       run: echo "APP_TAG=${{ steps.tagName.outputs.tag }}" >> $env:GITHUB_ENV
       if: ${{github.env.APP_TAG == 'v0.0.0'}} 
     - name: Print the current tag
-      run: echo ${{env.APP_TAG}}
+      run: echo ${{github.env.APP_TAG}}
  
   call-app-build:
     needs: fetch-tag

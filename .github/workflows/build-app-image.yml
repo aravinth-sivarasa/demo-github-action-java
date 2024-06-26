@@ -40,9 +40,13 @@ jobs:
 
   call-app-build:
     needs: fetch-tag
-    uses: ./.github/workflows/build-app-maven.yml
-    with:
-      APP_TAG: ${{ github.job.env.APP_TAG }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/workflows/build-app-maven.yml
+        with:
+          APP_TAG: ${{ env.APP_TAG }}
 
   build-app-image:
     needs: call-app-build

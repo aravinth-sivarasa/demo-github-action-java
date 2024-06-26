@@ -9,6 +9,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: demo-app
   JDK_VERSION: 17
+  APP_TAG: v0.0.0
 
 jobs:
 
@@ -23,7 +24,7 @@ jobs:
     - name: Fetch tag
       run: echo "APP_TAG=${{ steps.tagName.outputs.tag }}" >> $env:GITHUB_ENV
     - name: Print the current tag
-      run: echo -${{env.APP_TAG}}
+      run: echo ${{env.APP_TAG}}
 
   call-app-build:
     needs: fetch-tag

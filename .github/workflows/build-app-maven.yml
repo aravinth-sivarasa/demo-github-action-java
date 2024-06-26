@@ -25,6 +25,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    
+
+    - name: check env variables
+      run: echo "${{env}} and ${{APP_TAG}} and ${{env.APP_TAG}}"
     - name: Build with Maven
       run: mvn clean install -Drevision='${{env.APP_TAG}}'
 

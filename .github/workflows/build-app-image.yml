@@ -23,7 +23,7 @@ jobs:
   fetch-tag:
     runs-on: ubuntu-latest
     outputs:
-      APP_TAG:  ${{ env.APP_TAG }}
+      APP_TAG:  ${{ steps.tagName.outputs.tag }}
     steps:
       - uses: actions/checkout@v4
       - uses: olegtarasov/get-tag@v2.1.3

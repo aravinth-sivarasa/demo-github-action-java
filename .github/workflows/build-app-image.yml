@@ -41,12 +41,12 @@ jobs:
     needs: fetch-tag
     steps:
       - uses: actions/checkout@v4 
-      - run: echo "check the variable ${{ env.APP_TAG }}"     
+      - run: echo "check the variable ${{ needs.fetch-tag.outputs.APP_TAG }}"     
   call-app-build:
     needs: fetch-tag
     uses: ./.github/workflows/build-app-maven.yml
     with:
-      APP_TAG: ${{ github.env.APP_TAG_V1 }}
+      APP_TAG:  ${{ needs.fetch-tag.outputs.APP_TAG }}
 
   build-app-image:
     needs: call-app-build

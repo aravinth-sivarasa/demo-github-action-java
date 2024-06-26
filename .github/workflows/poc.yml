@@ -27,11 +27,11 @@ jobs:
           tagRegexGroup: 1 # Optional. Default is 1.
       - name: Fetch tag
         id: build_var
-        run: echo "APP_TAG=${{ steps.tagName.outputs.tag }}" >> $env:GITHUB_OUTPUT
+        run: echo "APP_TAG=${{ steps.tagName.outputs.tag }}" >> $GITHUB_OUTPUT
         if: ${{ env.APP_TAG == '' }}
 
       - name: Fetch final value
-        run: echo "APP_TAG_2=Test_value" >> $env:GITHUB_OUTPUT
+        run: echo "APP_TAG_2=Test_value" >> $GITHUB_OUTPUT
         id: build_var_2
       
 

@@ -51,6 +51,9 @@ jobs:
 
   call-app-image:
     needs: [call-app-build,fetch-tag]
+    permissions:
+      contents: read
+      packages: write
     uses: ./.github/workflows/02-build-app-image.yml
     with:
       APP_TAG:  ${{ needs.fetch-tag.outputs.APP_TAG }}

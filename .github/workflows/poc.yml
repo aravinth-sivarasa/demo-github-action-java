@@ -40,5 +40,5 @@ jobs:
     needs: fetch-tag
     steps:
       - uses: actions/checkout@v4 
-      - run: echo "check the variable ${{ env.APP_TAG_2 }}"  
+      - run: echo "check the variable ${{ github.env.APP_TAG_2 }} job ${{ github.job.fetch-tag.env.APP_TAG_2 }}"  
 

@@ -31,7 +31,7 @@ jobs:
         if: ${{ env.APP_TAG == '' }}
 
       - name: Fetch final value
-        run: echo "APP_TAG_2=Test_value" >> $GITHUB_OUTPUT
+        run: echo "APP_TAG_2=Test_value" >> $GITHUB_ENV
         id: build_var_2
       
 
@@ -40,5 +40,5 @@ jobs:
     needs: fetch-tag
     steps:
       - uses: actions/checkout@v4 
-      - run: echo "check the variable ${{ needs.fetch-tag.outputs.APP_TAG_2 }}"  
+      - run: echo "check the variable ${{ env.APP_TAG_2 }}"  
 

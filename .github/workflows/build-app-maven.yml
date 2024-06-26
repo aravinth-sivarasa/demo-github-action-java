@@ -28,7 +28,7 @@ jobs:
     
 
     - name: check env variables
-      run: echo "${{env}} and ${{APP_TAG}} and ${{env.APP_TAG}}"
+      run: echo "${{env}} and ${{env.APP_TAG}}"
     - name: Build with Maven
       run: mvn clean install -Drevision='${{env.APP_TAG}}'
 

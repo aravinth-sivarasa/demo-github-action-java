@@ -2,6 +2,11 @@ name: Build Gradle bundle, container image and push to Git registry
 
 on:
   workflow_dispatch: 
+    inputs:
+      APP_TAG:
+        description: 'Enter tag name'
+        required: true
+        type: environment
   push:
     tags:
     - 'v[0-9]+.[0-9]+.[0-9]+'
@@ -12,8 +17,8 @@ env:
   APP_TAG: v0.0.0
 
 jobs:
-
   fetch-tag:
+    if: ${{ github.event.inputs.APP_TAG }} == 'v0.0.0'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -25,11 +30,13 @@ jobs:
       run: echo "APP_TAG=${{ steps.tagName.outputs.tag }}" >> $env:GITHUB_ENV
     - name: Print the current tag
       run: echo ${{env.APP_TAG}}
-
+ 
   call-app-build:
     needs: fetch-tag
     uses: ./.github/workflows/build-app-maven.yml
-
+    with:
+      APP_TAG: ${{ github.event.inputs.APP_TAG }}
+    
   build-app-image:
     needs: call-app-build
     runs-on: ubuntu-latest
